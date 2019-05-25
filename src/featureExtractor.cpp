@@ -16,7 +16,20 @@ cv::Mat featureExtractor::detectKeypoints(const cv::Mat& img) {
 	return features;
 }
 
-cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f> corners){
+std::vector<cv::KeyPoint> featureExtractor::computeKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& features){
+	std::vector<cv::KeyPoint> keypoints;
+	for(std::size_t i = 0; i < features.size(); i++){
+		keypoints.push_back(cv::KeyPoint(features[i].x, features[i].y, 20));
+	}
+	return keypoints;
+//	cv::SurfDescriptorExtractor extractor;
+//	cv::Mat descriptor;
+//	extractor.compute(img, keypoints)
+//	return 
+}
+
+
+cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& corners){
 	for( std::size_t i = 0; i < corners.size(); i++ )
 		cv::circle(img, corners[i], 3, cv::Scalar(0,255, 0), 3); 
 	return img;

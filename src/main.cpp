@@ -21,12 +21,12 @@ int main(int argc, char** argv){
 	featureExtractor detector; // src/featureDetector.cpp class
 	cv::Mat gray;
 
-	while (cap.isOpened()){
-		cap >> frame;
-		cv::resize(frame, frame, cv::Size(W, H)); 
+	while (cap.isOpened()){ cap >> frame;
+		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // downscalling the image by half.
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
 		std::vector<cv::Point2f> corners =  detector.detectKeypoints(gray);
-		frame = detector.drawKeyPoints(frame, corners);	
+		detector.computeKeyPoints(gray, corners);
+	    // frame = detector.drawKeyPoints(frame, corners);	
 		image.draw(frame);
 		if(cv::waitKey(30) >= 0) break;
 	}
