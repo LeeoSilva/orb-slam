@@ -6,10 +6,10 @@
 cv::Mat featureExtractor::detectKeypoints(const cv::Mat& img) {
 	cv::Mat features;
 	
-	float maxFeatures= 3000.0f; // Max corners to detect
+	float maxFeatures= 3000.0f;  // Max corners to detect
 	float qualityLevel = 0.01f;  // if the best corner has the quality measure = 1500,
-								// and the qualityLevel=0.01 , then all the features which quality measure is
-								// less than 15 will be rejected.
+								 // and the qualityLevel=0.01 , then all the features which quality measure is
+								 // less than 15 will be rejected.
 								
 	float minDistance = 3; // The minimum possible Euclidean distance between the returned features 
 	cv::goodFeaturesToTrack(img, features, maxFeatures, qualityLevel, minDistance);

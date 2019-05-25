@@ -10,6 +10,9 @@ void logInfo(){
 
 int main(int argc, char** argv){
 	logInfo();
+	unsigned int W = 1920/2;
+	unsigned int H = 1080/2;
+
 	cv::VideoCapture cap(0); // Get the Webcam video capture
 		if(argc == 2) cap.open(std::string(argv[1]), CV_WINDOW_NORMAL);
 
@@ -20,6 +23,7 @@ int main(int argc, char** argv){
 
 	while (cap.isOpened()){
 		cap >> frame;
+		cv::resize(frame, frame, cv::Size(W, H)); 
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
 		std::vector<cv::Point2f> corners =  detector.detectKeypoints(gray);
 		frame = detector.drawKeyPoints(frame, corners);	
