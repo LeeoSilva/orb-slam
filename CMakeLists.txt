@@ -10,9 +10,15 @@ add_library(processing
 	./headers/processing.hpp
 )
 
+add_library(featureExtractor
+	./src/featureExtractor.cpp
+	./headers/featureExtractor.hpp
+)
+
 add_executable(orb-slam
 	./src/main.cpp
 )
 
-target_link_libraries(orb-slam ${OpenCV_LIBS})
+target_link_libraries(orb-slam featureExtractor)
 target_link_libraries(orb-slam processing)
+target_link_libraries(orb-slam ${OpenCV_LIBS})

@@ -4,6 +4,5 @@
 class featureExtractor{
 public:
 	cv::Mat detectKeypoints(const cv::Mat& img);
-	
 
 };
