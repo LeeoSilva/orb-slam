@@ -1,6 +1,6 @@
 #include "../headers/processing.hpp"
 
-void imageHandler::draw(cv::Mat frame){
+void imageHandler::draw(const cv::Mat& frame){
 	cv::namedWindow("Video Feed", 0);
 	if (width != 0 && heigth != 0)
 		cv::resize(frame, frame, cv::Size(width, heigth));

@@ -9,6 +9,7 @@ public:
 
 	void setWidth(const unsigned& width);
 	void setHeigth(const unsigned& height);
-	void detectKeypoints(cv::Mat img);
-	void draw(cv::Mat frame);
+	void detectKeypoints(const cv::Mat& img);
+	void draw(const cv::Mat& frame);
+//	cv::Mat getGrayScale(const cv::Mat& img);
 };
