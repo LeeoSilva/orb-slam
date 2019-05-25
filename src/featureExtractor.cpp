@@ -5,20 +5,15 @@
 
 //cv::Ptr<cv::FeatureExtractor> detectKeypoints(const cv::Mat& img){
 cv::Mat featureExtractor::detectKeypoints(const cv::Mat& img) {
-	// Detecting Keypoints with FAST
-	// Obs: the first argument of each detector usually controls
-	// the balance between the amount of keypoints and their
-	// stability.
-	// FAST has the meaning of pixel intensity difference and usually 
-	// varies in the region [0,40]
 	cv::Mat features;
-	cv::goodFeaturesToTrack(img, features, 3000, 0.01, 3);
-	std::cout << features << std::endl;
+	
+	float maxFeatures= 3000.0f; // Max corners to detect
+	float qualityLevel = 0.01f;  // if the best corner has the quality measure = 1500,
+								// and the qualityLevel=0.01 , then all the features which quality measure is
+								// less than 15 will be rejected.
+								
+	float minDistance = 3; // The minimum possible Euclidean distance between the returned features 
+	cv::goodFeaturesToTrack(img, features, maxFeatures, qualityLevel, minDistance);
 	return features;
-	// cv::Ptr<cv::FeatureExtractor> detector = cv::FastFeatureExtractor::create(15);
-	// std::vector<cv::KeyPoint> keypoints;
-	// return detector->detect(img1, keypoint);
 }
 
-
-// cv::Ptr<cv::SURF> computeDescriptors(const std::vector<cv::KeyPoint>& keypoint){}
