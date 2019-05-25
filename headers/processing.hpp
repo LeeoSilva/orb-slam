@@ -1,5 +1,6 @@
 #pragma once 
 #include <opencv2/opencv.hpp>
+#include <vector>
 
 class imageHandler{
 public:
@@ -8,5 +9,6 @@ public:
 
 	void setWidth(const unsigned& width);
 	void setHeigth(const unsigned& height);
+	void detectKeypoints(cv::Mat img);
 	void draw(cv::Mat frame);
 };
