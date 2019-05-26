@@ -3,9 +3,8 @@
 // and what is feature descriptors take a look into:
 // https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_feature2d/py_features_meaning/py_features_meaning.html#features-meaning
 
-cv::Mat featureExtractor::detectKeypoints(const cv::Mat& img) {
+cv::Mat featureExtractor::detectKeyPoints(const cv::Mat& img) {
 	cv::Mat features;
-	
 	float maxFeatures= 3000.0f;  // Max corners to detect
 	float qualityLevel = 0.01f;  // if the best corner has the quality measure = 1500,
 								 // and the qualityLevel=0.01 , then all the features which quality measure is
@@ -16,22 +15,23 @@ cv::Mat featureExtractor::detectKeypoints(const cv::Mat& img) {
 	return features;
 }
 
-std::vector<cv::KeyPoint> featureExtractor::computeKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& features){
+std::vector<cv::KeyPoint> featureExtractor::mat2KeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& features){
 	std::vector<cv::KeyPoint> keypoints;
-	for(std::size_t i = 0; i < features.size(); i++){
-		keypoints.push_back(cv::KeyPoint(features[i].x, features[i].y, 20));
-	}
+	for(std::size_t i = 0; i < features.size(); i++)
+		keypoints.push_back(cv::KeyPoint(features[i].x, features[i].y, 20)); 
 	return keypoints;
-//	cv::SurfDescriptorExtractor extractor;
-//	cv::Mat descriptor;
-//	extractor.compute(img, keypoints)
-//	return 
 }
 
+//std::vector<cv::Feature> featureExtractor::computeKeypoints(const cv::Mat& img, std::vector<cv::KeyPoint> keypoints){
+//	std::vector<cv::ORB> extractor = cv::Orb.detectAndCompute();
+//	for( std::size_t i = 0; i < keypoints[i]; i++){
+//			
+	//
+//	}
+//}
 
-cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& corners){
+cv::Mat featureExtractor::drawCorners(const cv::Mat& img, const std::vector<cv::Point2f>& corners){
 	for( std::size_t i = 0; i < corners.size(); i++ )
 		cv::circle(img, corners[i], 3, cv::Scalar(0,255, 0), 3); 
 	return img;
 }
-

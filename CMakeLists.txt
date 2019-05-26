@@ -3,8 +3,8 @@ project(orb-slam)
 
 find_package(OpenCV REQUIRED ) # OpenCV
 
-set(OPTION_BUILD "-j9 -std=c++11")
-
+set(OPTION_BUILD "-j 8 -std=c++11")
+set(OPTION_BUILD "-W -Wall -Werror") # For displaying debbug information
 add_library(processing
 	./src/processing.cpp
 	./headers/processing.hpp
