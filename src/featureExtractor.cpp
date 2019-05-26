@@ -3,16 +3,18 @@
 // and what is feature descriptors take a look into:
 // https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_feature2d/py_features_meaning/py_features_meaning.html#features-meaning
 
-cv::Mat featureExtractor::detectKeyPoints(const cv::Mat& img) {
-	cv::Mat features;
+std::vector<cv::KeyPoint> featureExtractor::detectKeyPoints(const cv::Mat& img) {
+	std::vector<cv::KeyPoint> keypoints;
+	cv::Ptr<cv::FeatureDetector> detector = cv::ORB::create();	
 	float maxFeatures= 3000.0f;  // Max corners to detect
 	float qualityLevel = 0.01f;  // if the best corner has the quality measure = 1500,
 								 // and the qualityLevel=0.01 , then all the features which quality measure is
 								 // less than 15 will be rejected.
 								
 	float minDistance = 3; // The minimum possible Euclidean distance between the returned features 
-	cv::goodFeaturesToTrack(img, features, maxFeatures, qualityLevel, minDistance);
-	return features;
+	detector->detect(img, keypoints);
+	//cv::goodFeaturesToTrack(img, features, maxFeatures, qualityLevel, minDistance);
+	return keypoints;
 }
 
 std::vector<cv::KeyPoint> featureExtractor::mat2KeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& features){

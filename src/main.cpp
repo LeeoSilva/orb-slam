@@ -25,10 +25,10 @@ int main(int argc, char** argv){
 		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // downscalling the image by half.
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
 
-		cv::Mat corners =  detector.detectKeyPoints(gray);
-		std::vector<cv::KeyPoint> keypoints = detector.mat2KeyPoints(gray, corners);
+		std::vector<cv::KeyPoint> corners =  detector.detectKeyPoints(gray);
+		//std::vector<cv::KeyPoint> keypoints = detector.mat2KeyPoints(gray, corners);
 		//std::vector<cv::KeyPoint> keypoints = detector.computeKeyPoints(gray, cv::KeyPoint(corners.x, corners.y));
-		frame = detector.drawKeyPoints(frame, keypoints);	
+		//frame = detector.drawKeyPoints(frame, keypoints);	
 		image.draw(frame);
 		if(cv::waitKey(30) >= 0) break;
 		if(frame.empty()) break;
