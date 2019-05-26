@@ -28,9 +28,10 @@ int main(int argc, char** argv){
 		cv::Mat corners =  detector.detectKeyPoints(gray);
 		std::vector<cv::KeyPoint> keypoints = detector.mat2KeyPoints(gray, corners);
 		//std::vector<cv::KeyPoint> keypoints = detector.computeKeyPoints(gray, cv::KeyPoint(corners.x, corners.y));
-		//frame = detector.drawKeyPoints(frame, keypoints);	
+		frame = detector.drawKeyPoints(frame, keypoints);	
 		image.draw(frame);
 		if(cv::waitKey(30) >= 0) break;
+		if(frame.empty()) break;
 	}
 
 	return 0;

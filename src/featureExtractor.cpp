@@ -30,8 +30,9 @@ std::vector<cv::KeyPoint> featureExtractor::mat2KeyPoints(const cv::Mat& img, co
 //	}
 //}
 
-cv::Mat featureExtractor::drawCorners(const cv::Mat& img, const std::vector<cv::Point2f>& corners){
-	for( std::size_t i = 0; i < corners.size(); i++ )
-		cv::circle(img, corners[i], 3, cv::Scalar(0,255, 0), 3); 
+cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::KeyPoint>& keypoints){
+	unsigned circleRadius = 1;
+	for( std::size_t i = 0; i < keypoints.size(); i++ )
+		cv::circle(img, keypoints[i].pt, circleRadius, cv::Scalar(0,255, 0), 3); 
 	return img;
 }
