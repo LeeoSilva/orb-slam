@@ -8,18 +8,19 @@
 
 
 int main(int argc, char** argv){
-
+	// Supported algorithms for feature detection
 	enum Algorithm{
-		GFFT = 0,
-		ORB  = 1
+		ORB  = 0, // Oriented FAST and Rotated BRIEF
+		GFFT = 1  // Good Features To Track 
 	};
 
 	std::string data = "";
+	Algorithm alg = ORB; // Default algorithm is ORB
 	if(argc >= 2){
 		for( std::size_t i = 1; i < argc; ++i){
 			std::string arg = argv[i];
 			if(arg == "h" || arg == "--help"){ std::cout << 1; logUsage(); return 0; }
-			if(arg == "GFTT"){ std::cout << 2; Algorithm alg = GFFT; }
+			if(arg == "GFTT"){ std::cout << 2; alg = GFFT; }
 			else data = arg;
 		}	
 	}
@@ -40,8 +41,14 @@ int main(int argc, char** argv){
 		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // downscalling the image by half.
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
 
-		std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_alg(gray);
-		frame = detector.drawKeyPoints(frame, result.second);
+		if(alg == ORB){
+			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_alg(gray);
+			frame = detector.drawKeyPoints(frame, result.second);
+		}
+		if(alg == GFFT){
+			cv::Mat result = detector.GFTT_alg(frame);
+			frame = detector.drawKeyPoints(frame, result);
+		}
 		image.draw(frame);
 		if(cv::waitKey(30) >= 0) break;
 		if(frame.empty()) break;

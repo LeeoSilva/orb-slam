@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(orb-slam)
+project(slam)
 
 find_package(OpenCV REQUIRED ) # OpenCV
 
@@ -20,11 +20,11 @@ add_library(arguments
 	./headers/arguments.hpp
 )
 
-add_executable(orb-slam
+add_executable(slam
 	./src/main.cpp
 )
 
-target_link_libraries(orb-slam arguments)
-target_link_libraries(orb-slam featureExtractor)
-target_link_libraries(orb-slam processing)
-target_link_libraries(orb-slam ${OpenCV_LIBS})
+target_link_libraries(slam arguments)
+target_link_libraries(slam featureExtractor)
+target_link_libraries(slam processing)
+target_link_libraries(slam ${OpenCV_LIBS})

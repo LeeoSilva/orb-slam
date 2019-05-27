@@ -4,4 +4,5 @@
 
 void logInfo();
 void logUsage();
+int  checkIfFile(const std::string& argument);
 
