@@ -6,13 +6,13 @@ SLAM is implemented with OPEN-CV framework using the C++ language.
 ## Installation
 
 **Requirements:**
- - AnyLinux distro,  
+ - Any Linux distro,  
  - [OPENCV](https://opencv.org/),
  - [CUDA](https://developer.nvidia.com/cuda-downloads),
  - [C++](http://www.cplusplus.com/),
  - [MAKE](https://cmake.org/),
 
-- Detectron has been tested extensively with OPENCV 3.4.1 
+Detectron has been tested extensively with OPENCV 3.4.1 
 
 
 When compiling from a the source code, run:
