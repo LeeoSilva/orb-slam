@@ -6,7 +6,6 @@
 #include "../headers/featureExtractor.hpp"
 #include "../headers/arguments.hpp"
 
-
 int main(int argc, char** argv){
 	// Supported algorithms for feature detection
 	enum Algorithm{
@@ -14,7 +13,7 @@ int main(int argc, char** argv){
 		GFFT = 1  // Good Features To Track 
 	};
 
-	std::string data = "";
+	std::string data; 
 	Algorithm alg = ORB; // Default algorithm is ORB
 	if(argc >= 2){
 		for( std::size_t i = 1; i < argc; ++i){
@@ -24,20 +23,17 @@ int main(int argc, char** argv){
 			else if(arg == "--orb"){ alg = ORB; }
 			else if(arg == "--gftt"){ alg = GFFT; }
 			else data = arg;
+
+			std::cout << "Algorithm: " << alg << std::endl;
+			std::cout << "Data file: " << data << std::endl;
 		}	
 	}
 
 	logInfo();
-	// Get the Webcam video capture
-	cv::VideoCapture cap(0, CV_WINDOW_NORMAL);
-	if(!cap.isOpened()) throw std::invalid_argument("Could not get access to webcam");
+	cv::VideoCapture cap; 
+	if(data.empty()) cap = cv::VideoCapture(0, CV_WINDOW_NORMAL);	
+	else cap.open(data, CV_WINDOW_NORMAL);
 
-	if(data != ""){
-		cv::VideoCapture cap(data, CV_WINDOW_NORMAL);
-		if(!cap.isOpened()) throw std::invalid_argument("Could not open " + data);
-	}
-	 
-		
 	cv::Mat frame; // OpenCV image type
 	imageHandler image; // src/imageHandler.cpp class
 	featureExtractor detector; // src/featureDetector.cpp class

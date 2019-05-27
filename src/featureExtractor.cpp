@@ -38,15 +38,6 @@ std::vector<cv::KeyPoint> featureExtractor::mat2KeyPoints(const std::vector<cv::
 	return keypoints;
 }
 
-//std::vector<cv::Feature> featureExtractor::computeKeypoints(const cv::Mat& img, std::vector<cv::KeyPoint> keypoints){
-//	std::vector<cv::ORB> extractor = cv::Orb.detectAndCompute();
-//	for( std::size_t i = 0; i < keypoints[i]; i++){
-//			
-	//
-//	}
-//}
-
-
 cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& keypoints){
 	unsigned circleRadius = 1;
 	cv::Scalar circleColor(0, 255, 0);
