@@ -18,27 +18,33 @@ int main(int argc, char** argv){
 	Algorithm alg = ORB; // Default algorithm is ORB
 	if(argc >= 2){
 		for( std::size_t i = 1; i < argc; ++i){
-			std::string arg = argv[i];
-			if(arg == "h" || arg == "--help"){ std::cout << 1; logUsage(); return 0; }
-			if(arg == "GFTT"){ std::cout << 2; alg = GFFT; }
+			std::string arg = std::string(argv[i]);
+			std::cout << arg << std::endl;
+			if(arg == "h" || arg == "--help"){ logUsage(); return 0; }
+			else if(arg == "--orb"){ alg = ORB; }
+			else if(arg == "--gftt"){ alg = GFFT; }
 			else data = arg;
 		}	
 	}
 
 	logInfo();
-	cv::VideoCapture cap(0, CV_WINDOW_NORMAL); // Get the Webcam video capture
-	std::cout << data << std::endl;
+	// Get the Webcam video capture
+	cv::VideoCapture cap(0, CV_WINDOW_NORMAL);
+	if(!cap.isOpened()) throw std::invalid_argument("Could not get access to webcam");
+
 	if(data != ""){
-		cap.open(data, CV_WINDOW_NORMAL);
+		cv::VideoCapture cap(data, CV_WINDOW_NORMAL);
 		if(!cap.isOpened()) throw std::invalid_argument("Could not open " + data);
-	} 
+	}
+	 
 		
 	cv::Mat frame; // OpenCV image type
 	imageHandler image; // src/imageHandler.cpp class
 	featureExtractor detector; // src/featureDetector.cpp class
 	cv::Mat gray;
 
-	while (cap.isOpened()){ cap >> frame;
+	while (cap.isOpened()){ 
+		cap >> frame; // Get every frame of the video
 		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // Downscaling the image by half.
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
 
@@ -46,10 +52,9 @@ int main(int argc, char** argv){
 			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_alg(gray);
 			frame = detector.drawKeyPoints(frame, result.second);
 		}
-		if(alg == GFFT){
-			std::vector<cv::Point2f> result = detector.GFTT_alg(frame);
-			std::vector<cv::KeyPoint> keypoints = detector.mat2KeyPoints(result);
-			frame = detector.drawKeyPoints(frame, keypoints);
+		else if(alg == GFFT){
+			std::vector<cv::Point2f> corners = detector.GFTT_alg(gray);
+			frame = detector.drawKeyPoints(frame, corners);
 		}
 		image.draw(frame);
 		if(cv::waitKey(30) >= 0) break;

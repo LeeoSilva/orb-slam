@@ -12,8 +12,7 @@ SLAM is implemented with OPEN-CV framework using the C++ language.
  - [C++](http://www.cplusplus.com/),
  - [MAKE](https://cmake.org/),
 
-Detectron has been tested extensively with OPENCV 3.4.1 
-
+Detectron has been tested extensively with OPENCV 3.4.4 
 
 When compiling from a the source code, run:
 

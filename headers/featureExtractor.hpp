@@ -9,5 +9,6 @@ public:
 	std::vector<cv::Point2f> GFTT_alg(const cv::Mat& img);
 	//std::vector<cv::KeyPoint> computeKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& features);
 	std::vector<cv::KeyPoint> mat2KeyPoints(const std::vector<cv::Point2f>& features);
-	cv::Mat drawKeyPoints(const cv::Mat& img, const std::vector<cv::KeyPoint>& keypoints);
+	cv::Mat drawKeyPoints(const cv::Mat& img, const std::vector<cv::KeyPoint>& keypoints); 
+	cv::Mat drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& keypoints);
 };
