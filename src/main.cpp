@@ -24,7 +24,8 @@ int main(int argc, char** argv){
 			else data = arg;
 		}	
 	}
-	
+
+	logInfo();
 	cv::VideoCapture cap(0, CV_WINDOW_NORMAL); // Get the Webcam video capture
 	std::cout << data << std::endl;
 	if(data != ""){
@@ -38,7 +39,7 @@ int main(int argc, char** argv){
 	cv::Mat gray;
 
 	while (cap.isOpened()){ cap >> frame;
-		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // downscalling the image by half.
+		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // Downscaling the image by half.
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
 
 		if(alg == ORB){
@@ -46,8 +47,9 @@ int main(int argc, char** argv){
 			frame = detector.drawKeyPoints(frame, result.second);
 		}
 		if(alg == GFFT){
-			cv::Mat result = detector.GFTT_alg(frame);
-			frame = detector.drawKeyPoints(frame, result);
+			std::vector<cv::Point2f> result = detector.GFTT_alg(frame);
+			std::vector<cv::KeyPoint> keypoints = detector.mat2KeyPoints(result);
+			frame = detector.drawKeyPoints(frame, keypoints);
 		}
 		image.draw(frame);
 		if(cv::waitKey(30) >= 0) break;

@@ -18,9 +18,9 @@ std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_alg(const cv
 }
 
 
-cv::Mat featureExtractor::GFTT_alg(const cv::Mat& img) {
+std::vector<cv::Point2f> featureExtractor::GFTT_alg(const cv::Mat& img) {
 	// Determines strong corners in a image.
-	cv::Mat features;
+	std::vector<cv::Point2f> features;
 	unsigned maxFeatures= 3000;  // Max corners to detect
 	float qualityLevel = 0.01f;  // if the best corner has the quality measure = 1500,
 								 // and the qualityLevel=0.01 , then all the features which quality measure is
@@ -31,12 +31,12 @@ cv::Mat featureExtractor::GFTT_alg(const cv::Mat& img) {
 	return features;
 }
 
-//std::vector<cv::KeyPoint> featureExtractor::mat2KeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& features){
-//	std::vector<cv::KeyPoint> keypoints;
-//	for(std::size_t i = 0; i < features.size(); i++)
-//		keypoints.push_back(cv::KeyPoint(features[i].x, features[i].y, 20)); 
-//	return keypoints;
-//}
+std::vector<cv::KeyPoint> featureExtractor::mat2KeyPoints(const std::vector<cv::Point2f>& features){ 
+	std::vector<cv::KeyPoint> keypoints;
+	for(std::size_t i = 0; i < features.size(); i++)
+		keypoints.push_back(cv::KeyPoint(features[i].x, features[i].y, 20)); 
+	return keypoints;
+}
 
 //std::vector<cv::Feature> featureExtractor::computeKeypoints(const cv::Mat& img, std::vector<cv::KeyPoint> keypoints){
 //	std::vector<cv::ORB> extractor = cv::Orb.detectAndCompute();
@@ -49,7 +49,10 @@ cv::Mat featureExtractor::GFTT_alg(const cv::Mat& img) {
 
 cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::KeyPoint>& keypoints){
 	unsigned circleRadius = 1;
+	cv::Scalar circleColor(0, 255, 0);
+	unsigned circleTickness = 1;
 	for( std::size_t i = 0; i < keypoints.size(); i++ )
-		cv::circle(img, keypoints[i].pt, circleRadius, cv::Scalar(0,255, 0), 3); 
+		cv::circle(img, keypoints[i].pt, circleRadius, circleColor, circleTickness); 
 	return img;
 }
+
