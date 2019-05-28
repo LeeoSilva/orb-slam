@@ -16,16 +16,12 @@ int main(int argc, char** argv){
 	std::string data; 
 	Algorithm alg = ORB; // Default algorithm is ORB
 	if(argc >= 2){
-		for( std::size_t i = 1; i < argc; ++i){
+	for( std::size_t i = 1; i < argc; ++i){
 			std::string arg = std::string(argv[i]);
-			std::cout << arg << std::endl;
 			if(arg == "h" || arg == "--help"){ logUsage(); return 0; }
 			else if(arg == "--orb"){ alg = ORB; }
 			else if(arg == "--gftt"){ alg = GFFT; }
 			else data = arg;
-
-			std::cout << "Algorithm: " << alg << std::endl;
-			std::cout << "Data file: " << data << std::endl;
 		}	
 	}
 
@@ -35,6 +31,7 @@ int main(int argc, char** argv){
 	else cap.open(data, CV_WINDOW_NORMAL);
 
 	cv::Mat frame; // OpenCV image type
+	cv::Mat descriptor;
 	imageHandler image; // src/imageHandler.cpp class
 	featureExtractor detector; // src/featureDetector.cpp class
 	cv::Mat gray;
@@ -45,7 +42,8 @@ int main(int argc, char** argv){
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
 
 		if(alg == ORB){
-			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_alg(gray);
+			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_detector(gray);
+			cv::Mat descriptors = detector.ORB_compute(frame, result.second);
 			frame = detector.drawKeyPoints(frame, result.second);
 		}
 		else if(alg == GFFT){

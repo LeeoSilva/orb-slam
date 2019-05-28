@@ -6,7 +6,7 @@
 // https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_feature2d/py_features_meaning/py_features_meaning.html#features-meaning
 
 
-std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_alg(const cv::Mat& img){
+std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_detector(const cv::Mat& img){
 	// A modification of FAST algorithm
 	// Obs: Ironically it is faster then FAST '-'
 	cv::Ptr<cv::FeatureDetector> detector = cv::ORB::create(); 
@@ -17,6 +17,14 @@ std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_alg(const cv
 	return std::make_pair(descriptors, keypoints);
 }
 
+cv::Mat featureExtractor::ORB_compute(const cv::Mat& img, std::vector<cv::KeyPoint> keypoints){
+	// Computes the descriptors to get ready for feature matching
+	// Requires ORB::detector() function return statements to work
+	cv::Mat descriptors;
+	cv::Ptr<cv::Feature2D> extractor = cv::ORB::create();
+	extractor->compute(img, keypoints, descriptors);
+	return descriptors;
+}
 
 std::vector<cv::Point2f> featureExtractor::GFTT_alg(const cv::Mat& img) {
 	// Determines strong corners in a image.
@@ -44,7 +52,6 @@ cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv
 	unsigned circleTickness = 1;
 	for( std::size_t i = 0; i < keypoints.size(); i++ )
         cv::circle(img, keypoints[i], circleRadius, circleColor, circleTickness); 
-		//cv::circle(img, keypoints[i], circleRadius, circleColor, circleTickness); 
 	return img;
 }
 
