@@ -7,7 +7,7 @@
 std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_detector(const cv::Mat& img){
 	// A modification of FAST algorithm
 	// Obs: Ironically it is faster then FAST '-'
-	cv::Ptr<cv::FeatureDetector> detector = cv::ORB::create(); 
+	cv::Ptr<cv::FeatureDetector> detector = cv::ORB::create(3000); 
 	std::vector<cv::KeyPoint> keypoints;
 	cv::Mat descriptors;
 	detector->detect(img, keypoints);
@@ -15,7 +15,7 @@ std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_detector(con
 	return std::make_pair(descriptors, keypoints);
 }
 
-cv::Mat featureExtractor::ORB_compute(const cv::Mat& img, std::vector<cv::KeyPoint> keypoints){
+cv::Mat featureExtractor::ORB_compute(const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints){
 	// Computes the descriptors to get ready for feature matching
 	// Requires ORB::detector() function return statements to work
 	cv::Mat descriptors;
@@ -24,9 +24,10 @@ cv::Mat featureExtractor::ORB_compute(const cv::Mat& img, std::vector<cv::KeyPoi
 	return descriptors;
 }
 
-std::vector<cv::DMatch> ORB_match(const cv::Mat& img1, const std::vector<cv::DMatch> goodFeatures){
-	matcher.knnMatch(descriptors1, descriptors2, matches, 2);
-	return matches;
+std::vector<cv::DMatch> ORB_match(const cv::Mat& img1, const std::vector<cv::DMatch>& goodFeatures){
+	// cv::Ptr<cv::DMatch> matcher;
+	//matcher.knnMatch(descriptors1, descriptors2, matches, 2);
+	// return matches;
 }
 
 std::vector<cv::Mat> swapImages(std::vector<cv::Mat>& vector, const cv::Mat& img){}
