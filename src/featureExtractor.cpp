@@ -24,6 +24,13 @@ cv::Mat featureExtractor::ORB_compute(const cv::Mat& img, std::vector<cv::KeyPoi
 	return descriptors;
 }
 
+std::pair<cv::Mat, std::vector<cv::KeyPoint>> ORB_detectAndCompute(const cv::Mat& img){
+	featureExtractor detector; 
+	std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_detector(img);
+	cv::Mat descriptors = detector.ORB_compute(img, result.second);
+	return (descriptors, result);
+}
+
 std::vector<cv::DMatch> ORB_match(const cv::Mat& img1, const std::vector<cv::DMatch>& goodFeatures){
 	// cv::Ptr<cv::DMatch> matcher;
 	//matcher.knnMatch(descriptors1, descriptors2, matches, 2);

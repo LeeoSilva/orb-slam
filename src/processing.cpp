@@ -9,7 +9,7 @@ void imageHandler::draw(const cv::Mat& frame){
 	const std::string windowName = "Video Feed";
  	cv::namedWindow(windowName, CV_WINDOW_AUTOSIZE);
 	cv::resizeWindow(windowName, frame.size[0], frame.size[1]);
-	cv::imshow(windowName, cv::Mat(frame));
+	cv::imshow(windowName, frame);
 }
  
 

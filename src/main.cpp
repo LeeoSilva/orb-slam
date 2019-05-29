@@ -30,13 +30,16 @@ int main(int argc, char** argv){
 	if(data.empty()) cap = cv::VideoCapture(0, CV_WINDOW_NORMAL);	
 	else cap.open(data, CV_WINDOW_NORMAL);
 
-	cv::Mat frame; // OpenCV image type
-	cv::Mat descriptor;
+	cv::Mat frame; // Current frame
+	cv::Mat prevFrame; // Previous frame (for matching)
+
+	cv::Mat descriptor; // Descriptor of keypoints
 	imageHandler image; // src/imageHandler.cpp class
 	featureExtractor detector; // src/featureDetector.cpp class
-	cv::Mat gray;
+	cv::Mat gray; // Current frame, but grayscale (easy for the algs)_
 
-	while (cap.isOpened()){ 
+	while(cap.isOpened()){	
+		frame = prevFrame;
 		cap >> frame; // Get every frame of the video
 		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // Downscaling the image by half.
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
