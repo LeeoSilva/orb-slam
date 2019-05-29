@@ -1,6 +1,4 @@
 #include "../headers/featureExtractor.hpp"
-
-
 // For a explanation of what is a feature in a image
 // and what is feature descriptors take a look into:
 // https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_feature2d/py_features_meaning/py_features_meaning.html#features-meaning
@@ -25,6 +23,14 @@ cv::Mat featureExtractor::ORB_compute(const cv::Mat& img, std::vector<cv::KeyPoi
 	extractor->compute(img, keypoints, descriptors);
 	return descriptors;
 }
+
+std::vector<cv::DMatch> ORB_match(const cv::Mat& img1, const std::vector<cv::DMatch> goodFeatures){
+	matcher.knnMatch(descriptors1, descriptors2, matches, 2);
+	return matches;
+}
+
+std::vector<cv::Mat> swapImages(std::vector<cv::Mat>& vector, const cv::Mat& img){}
+
 
 std::vector<cv::Point2f> featureExtractor::GFTT_alg(const cv::Mat& img) {
 	// Determines strong corners in a image.
