@@ -33,7 +33,8 @@ int main(int argc, char** argv){
 	cv::Mat frame; // Current frame
 	cv::Mat prevFrame; // Previous frame (for matching)
 
-	cv::Mat descriptor; // Descriptor of keypoints
+	cv::Mat descriptor; // Descriptor of keypoints current frame
+	cv::Mat prevDescriptor; // Descriptor of keypoints of the previous frame
 	imageHandler image; // src/imageHandler.cpp class
 	featureExtractor detector; // src/featureDetector.cpp class
 	cv::Mat gray; // Current frame, but grayscale (easy for the algs)_
@@ -41,12 +42,11 @@ int main(int argc, char** argv){
 	while(cap.isOpened()){	
 		frame = prevFrame;
 		cap >> frame; // Get every frame of the video
+		if(frame.empty()) break;
 		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // Downscaling the image by half.
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
-
 		if(alg == ORB){
-			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_detector(gray);
-			cv::Mat descriptors = detector.ORB_compute(frame, result.second);
+			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_detectAndCompute(gray);
 			frame = detector.drawKeyPoints(frame, result.second);
 		}
 		else if(alg == GFFT){
@@ -55,7 +55,6 @@ int main(int argc, char** argv){
 		}
 		image.draw(frame);
 		if(cv::waitKey(30) >= 0) break;
-		if(frame.empty()) break;
 	}
 
 	return 0;

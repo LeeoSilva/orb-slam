@@ -24,19 +24,21 @@ cv::Mat featureExtractor::ORB_compute(const cv::Mat& img, std::vector<cv::KeyPoi
 	return descriptors;
 }
 
-std::pair<cv::Mat, std::vector<cv::KeyPoint>> ORB_detectAndCompute(const cv::Mat& img){
+std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_detectAndCompute(const cv::Mat& img){
 	featureExtractor detector; 
 	std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_detector(img);
 	cv::Mat descriptors = detector.ORB_compute(img, result.second);
 	return (descriptors, result);
 }
 
-std::vector<cv::DMatch> ORB_match(const cv::Mat& img1, const std::vector<cv::DMatch>& goodFeatures){
-	// cv::Ptr<cv::DMatch> matcher;
-	//matcher.knnMatch(descriptors1, descriptors2, matches, 2);
-	// return matches;
+std::vector<std::vector<cv::DMatch>> featureExtractor::ORB_match(const cv::Mat& img1, const std::vector<cv::DMatch>& goodFeatures){
+	cv::Ptr<cv::DescriptorMatcher> matcher = cv::DescriptorMatcher::create(cv::NORM_HAMMING);
+    std::vector< std::vector<cv::DMatch> > knn_matches;
+	cv::Mat descriptors1, descriptors2;
+    matcher->knnMatch( descriptors1, descriptors2, knn_matches, 2 );
+	return knn_matches;
 }
-
+ 
 std::vector<cv::Mat> swapImages(std::vector<cv::Mat>& vector, const cv::Mat& img){}
 
 
