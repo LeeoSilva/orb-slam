@@ -63,7 +63,7 @@ std::vector<cv::KeyPoint> featureExtractor::mat2KeyPoints(const std::vector<cv::
 cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& keypoints){
 	unsigned circleRadius = 1;
 	cv::Scalar circleColor(0, 255, 0);
-	unsigned circleTickness = 1;
+	unsigned circleTickness = 3;
 	for( std::size_t i = 0; i < keypoints.size(); i++ )
         cv::circle(img, keypoints[i], circleRadius, circleColor, circleTickness); 
 	return img;
