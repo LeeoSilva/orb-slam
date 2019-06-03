@@ -30,6 +30,7 @@ int main(int argc, char** argv){
 	if(data.empty()) cap = cv::VideoCapture(0, CV_WINDOW_NORMAL);	
 	else cap.open(data, CV_WINDOW_NORMAL);
 
+	std::vector<cv::Mat> frames;
 	cv::Mat frame; // Current frame
 	cv::Mat prevFrame; // Previous frame (for matching)
 
@@ -39,18 +40,21 @@ int main(int argc, char** argv){
 	featureExtractor detector; // src/featureDetector.cpp class
 	cv::Mat gray; // Current frame, but grayscale (easy for the algs)_
 
-	while(cap.isOpened()){	
-		frame = prevFrame;
-		cap >> frame; // Get every frame of the video
+	//while(cap.isOpened()){	
+	for(std::size_t i = 0; cap.isOpened(); i++){
+		cap >> frame; // Converts VideoCapture to cv::Mat
 		if(frame.empty()) break;
 		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // Downscaling the image by half.
 		cv::cvtColor(frame, gray, CV_RGB2GRAY);
+		frames.push_back(frame);
 		if(alg == ORB){
-			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result =  detector.ORB_detectAndCompute(gray);
-			frame = detector.drawKeyPoints(frame, result.second);
+			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result1 = detector.ORB_detectAndCompute(gray);
+			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result2 = detector.ORB_detectAndCompute(frames[i-1]);
+			frame = detector.drawKeyPoints(frame, result1.second);
+			std::vector<std::vector<cv::DMatch>> matches = detector.ORB_match(result1.first, result2.first);
 		}
 		else if(alg == GFFT){
-			std::vector<cv::Point2f> corners = detector.GFTT_alg(gray);
+			std::vector<cv::Point2f> corners = detector.GFTT_detect(gray);
 			frame = detector.drawKeyPoints(frame, corners);
 		}
 		image.draw(frame);

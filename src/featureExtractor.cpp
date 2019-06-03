@@ -7,7 +7,8 @@
 std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_detector(const cv::Mat& img){
 	// A modification of FAST algorithm
 	// Obs: Ironically it is faster then FAST '-'
-	cv::Ptr<cv::FeatureDetector> detector = cv::ORB::create(3000); 
+	unsigned maxFeatures = 3000;
+	cv::Ptr<cv::FeatureDetector> detector = cv::ORB::create(maxFeatures); 
 	std::vector<cv::KeyPoint> keypoints;
 	cv::Mat descriptors;
 	detector->detect(img, keypoints);
@@ -38,7 +39,7 @@ std::vector<std::vector<cv::DMatch>> featureExtractor::ORB_match(const cv::Mat& 
 	return knn_matches;
 }
 
-std::vector<cv::Point2f> featureExtractor::GFTT_alg(const cv::Mat& img) {
+std::vector<cv::Point2f> featureExtractor::GFTT_detect(const cv::Mat& img) {
 	// Determines strong corners in a image.
 	std::vector<cv::Point2f> features;
 	unsigned maxFeatures= 3000;  // Max corners to detect
