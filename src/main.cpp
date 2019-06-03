@@ -5,6 +5,7 @@
 #include "../headers/processing.hpp"
 #include "../headers/featureExtractor.hpp"
 #include "../headers/arguments.hpp"
+#include "../headers/frame.hpp"
 
 int main(int argc, char** argv){
 	// Supported algorithms for feature detection
@@ -31,33 +32,21 @@ int main(int argc, char** argv){
 	else cap.open(data, CV_WINDOW_NORMAL);
 
 	std::vector<cv::Mat> frames;
-	cv::Mat frame; // Current frame
+	cv::Mat img; // Current frame
 	cv::Mat prevFrame; // Previous frame (for matching)
 
 	cv::Mat descriptor; // Descriptor of keypoints current frame
-	cv::Mat prevDescriptor; // Descriptor of keypoints of the previous frame
+	cv::Mat prevDescriptor; // Descriptor of keypoints of the previous img
 	imageHandler image; // src/imageHandler.cpp class
 	featureExtractor detector; // src/featureDetector.cpp class
-	cv::Mat gray; // Current frame, but grayscale (easy for the algs)_
+	cv::Mat gray; // Current img, but grayscale (easy for the algs)_
 
-	//while(cap.isOpened()){	
-	for(std::size_t i = 0; cap.isOpened(); i++){
-		cap >> frame; // Converts VideoCapture to cv::Mat
-		if(frame.empty()) break;
-		cv::resize(frame, frame, cv::Size(frame.size[1]*0.5, frame.size[0]*0.5)); // Downscaling the image by half.
-		cv::cvtColor(frame, gray, CV_RGB2GRAY);
-		frames.push_back(frame);
-		if(alg == ORB){
-			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result1 = detector.ORB_detectAndCompute(gray);
-			std::pair<cv::Mat, std::vector<cv::KeyPoint>> result2 = detector.ORB_detectAndCompute(frames[i-1]);
-			frame = detector.drawKeyPoints(frame, result1.second);
-			std::vector<std::vector<cv::DMatch>> matches = detector.ORB_match(result1.first, result2.first);
-		}
-		else if(alg == GFFT){
-			std::vector<cv::Point2f> corners = detector.GFTT_detect(gray);
-			frame = detector.drawKeyPoints(frame, corners);
-		}
-		image.draw(frame);
+	while(cap.isOpened()){	
+		cap >> img; // Converts VideoCapture to cv::Mat
+		if(img.empty()) break;
+		struct Frame frame = Frame(img);
+		img = frame.process_frame();
+		image.draw(img);
 		if(cv::waitKey(30) >= 0) break;
 	}
 
