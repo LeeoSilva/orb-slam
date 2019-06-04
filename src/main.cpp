@@ -31,24 +31,19 @@ int main(int argc, char** argv){
 	if(data.empty()) cap = cv::VideoCapture(0, CV_WINDOW_NORMAL);	
 	else cap.open(data, CV_WINDOW_NORMAL);
 
-	std::vector<cv::Mat> frames;
 	cv::Mat img; // Current frame
-	cv::Mat prevFrame; // Previous frame (for matching)
-
-	cv::Mat descriptor; // Descriptor of keypoints current frame
-	cv::Mat prevDescriptor; // Descriptor of keypoints of the previous img
+	cv::Mat prevFrame; // Previous frame for matching
 	imageHandler image; // src/imageHandler.cpp class
-	featureExtractor detector; // src/featureDetector.cpp class
-	cv::Mat gray; // Current img, but grayscale (easy for the algs)_
 
 	while(cap.isOpened()){	
 		cap >> img; // Converts VideoCapture to cv::Mat
 		if(img.empty()) break;
-		struct Frame frame = Frame(img);
-		img = frame.process_frame();
-		image.draw(img);
+		std::cout << "Arrived here" << std::endl;
+		Frame frame = Frame(img);
+		frame.process_frame();
+		frame.draw();
 		if(cv::waitKey(30) >= 0) break;
 	}
-
 	return 0;
 }
+

@@ -16,3 +16,8 @@ cv::Mat Frame::process_frame(){
 	return extractor.drawKeyPoints(this->frame, keypoints);
 }
 
+void Frame::draw(){
+ 	cv::namedWindow("Video Feed", CV_WINDOW_AUTOSIZE);
+	cv::resizeWindow("Video Feed", frame.size[1]*0.5, frame.size[0]*0.5);
+	cv::imshow("Video Feed", frame);
+}

@@ -9,6 +9,6 @@ struct Frame{
 	
 	Frame(const cv::Mat& img);
 	cv::Mat process_frame();
-
+	void draw();
 };
 
