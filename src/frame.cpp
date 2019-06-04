@@ -16,5 +16,3 @@ cv::Mat Frame::process_frame(){
 	return extractor.drawKeyPoints(this->frame, keypoints);
 }
 
-	
- 
