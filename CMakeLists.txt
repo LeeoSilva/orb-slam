@@ -30,8 +30,8 @@ add_executable(slam
 	./src/main.cpp
 )
 
-target_link_libraries(slam featureExtractor)
-target_link_libraries(slam frame)
 target_link_libraries(slam arguments)
 target_link_libraries(slam processing)
+target_link_libraries(slam frame)
+target_link_libraries(slam featureExtractor)
 target_link_libraries(slam ${OpenCV_LIBS})
