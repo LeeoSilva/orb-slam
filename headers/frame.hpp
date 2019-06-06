@@ -8,7 +8,7 @@ private:
 	cv::Mat frame;
 	cv::Mat gray;
 	std::vector<cv::KeyPoint> keypoints;
-	std::vector<cv::Mat> descriptors;
+	cv::Mat descriptors;
 public:	
 	Frame(const cv::Mat& img);
 	void process_frame();

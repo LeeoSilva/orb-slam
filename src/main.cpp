@@ -39,11 +39,8 @@ int main(int argc, char** argv){
 		cap >> img; // Converts VideoCapture to cv::Mat
 		if(img.empty()) break;
 		Frame frame(img);
-		std::cout << "Preparing frame" << std::endl;
 		frame.prepare_frame();
-		std::cout << "Processing frame" << std::endl;
 		frame.process_frame();
-		std::cout << "Drawing Frame" << std::endl;
 		frame.draw(); 
 		if(cv::waitKey(30) >= 0) break;
 	}

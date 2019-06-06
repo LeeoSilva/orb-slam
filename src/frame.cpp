@@ -7,7 +7,7 @@ Frame::Frame(const cv::Mat& img){
 }
 
 void Frame::prepare_frame(){
-	cv::resize(this->frame, this->frame, this->frame.size(), 0.5, 0.5); // Downscaling the image by half.
+	cv::resize(this->frame, this->frame, cv::Size(this->frame.size[1]*0.5, this->frame.size[0]*0.5)); // Downscaling the image by half.
 	cv::cvtColor(this->frame, this->gray, CV_RGB2GRAY); 
 }
 
@@ -17,14 +17,9 @@ void Frame::process_frame(){
 		return;
 	}
 	featureExtractor extractor;
-	std::cout << "Detecting good features to track" << std::endl;
 	this->keypoints = extractor.GFTT_detect(this->gray);
-	std::cout << "Computing descriptors" << std::endl;
-	std::cout << "got " << this->keypoints.size() << " KeyPoints" << std::endl;
 	this->descriptors = extractor.ORB_compute(this->gray, this->keypoints); // Compute descriptors
-	std::cout << "Drawing keypoints" << std::endl;
 	this->frame = extractor.drawKeyPoints(this->frame, this->keypoints); // Draw keypoints in the original image
-	std::cout << "Done drawing keypoints" << std::endl;
 }
  
 void Frame::draw(){
