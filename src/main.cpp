@@ -19,7 +19,7 @@ int main(int argc, char** argv){
 	if(argc >= 2){
 	for( std::size_t i = 1; i < argc; ++i){
 			std::string arg = std::string(argv[i]);
-			if(arg == "h" || arg == "--help"){ logUsage(); return 0; }
+			if(arg == "-h" || arg == "--help"){ logUsage(); return 0; }
 			else if(arg == "--orb"){ alg = ORB; }
 			else if(arg == "--gftt"){ alg = GFFT; }
 			else data = arg;
@@ -38,10 +38,13 @@ int main(int argc, char** argv){
 	while(cap.isOpened()){	
 		cap >> img; // Converts VideoCapture to cv::Mat
 		if(img.empty()) break;
-		std::cout << "Arrived here" << std::endl;
-		Frame frame = Frame(img);
+		Frame frame(img);
+		std::cout << "Preparing frame" << std::endl;
+		frame.prepare_frame();
+		std::cout << "Processing frame" << std::endl;
 		frame.process_frame();
-		frame.draw();
+		std::cout << "Drawing Frame" << std::endl;
+		frame.draw(); 
 		if(cv::waitKey(30) >= 0) break;
 	}
 	return 0;

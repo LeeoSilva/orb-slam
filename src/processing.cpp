@@ -8,8 +8,8 @@ inline void imageHandler::setHeigth(const unsigned& y){ heigth = y; }
 // ratio variables resize the image and drawn it
 void imageHandler::draw(const cv::Mat& frame){
  	cv::namedWindow("Video Feed", CV_WINDOW_AUTOSIZE);
-	cv::resizeWindow("Video Feed", frame.size[1]*0.5, frame.size[0]*0.5);
+	cv::resizeWindow("Video Feed", frame.size[1], frame.size[0]);
 	cv::imshow("Video Feed", frame);
 }
  
-
+ 

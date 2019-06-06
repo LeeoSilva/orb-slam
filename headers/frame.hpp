@@ -1,14 +1,18 @@
 #pragma once
 #include <opencv2/opencv.hpp>
+#include <vector>
 #include "../headers/featureExtractor.hpp"
 
-struct Frame{
+class Frame{
+private:
 	cv::Mat frame;
+	cv::Mat gray;
 	std::vector<cv::KeyPoint> keypoints;
 	std::vector<cv::Mat> descriptors;
-	
+public:	
 	Frame(const cv::Mat& img);
-	cv::Mat process_frame();
+	void process_frame();
+	void prepare_frame();
 	void draw();
 };
 
