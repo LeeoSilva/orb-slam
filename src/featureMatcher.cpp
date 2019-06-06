@@ -9,7 +9,7 @@ void featureMatcher::match(const cv::Mat& descriptors1, const cv::Mat& descripto
 	matcher.match(descriptors1, descriptors2, this->matches);
 }
 
-cv::Mat featureMatcher::draw(const cv::Mat& actFrame, 
+cv::Mat featureMatcher::paint(const cv::Mat& actFrame, 
 					const std::vector<cv::KeyPoint>& keypoints1, 
 					const cv::Mat& prevFrame,
 					const std::vector<cv::KeyPoint>& keypoints2){

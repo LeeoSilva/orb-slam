@@ -54,7 +54,7 @@ int main(int argc, char** argv){
 			prevFrame.process_frame();
 
 			matcher.match(actFrame.getDescriptors(), prevFrame.getDescriptors());	
-			matchedImage = matcher.draw(img, actFrame.getKeyPoints(), prevImg, prevFrame.getKeyPoints());
+			matchedImage = matcher.paint(img, actFrame.getKeyPoints(), prevImg, prevFrame.getKeyPoints());
 		}
 
 		if(matchedImage.empty()) image.draw(img); 
