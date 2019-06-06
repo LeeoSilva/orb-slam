@@ -31,6 +31,11 @@ add_library(featureMatcher
 	./headers/featureMatcher.hpp
 )
 
+add_library(localization
+	./src/localization.cpp
+	./headers/localization.hpp
+)
+
 add_executable(slam
 	./src/main.cpp
 )
