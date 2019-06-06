@@ -3,9 +3,10 @@
 #include <opencv2/opencv.hpp>
 #include <utility>
 #include "../headers/processing.hpp"
-#include "../headers/featureExtractor.hpp"
+#include "../headers/featureMatcher.hpp"
 #include "../headers/arguments.hpp"
 #include "../headers/frame.hpp"
+#include "../headers/featureExtractor.hpp"
 
 int main(int argc, char** argv){
 	// Supported algorithms for feature detection
@@ -32,16 +33,33 @@ int main(int argc, char** argv){
 	else cap.open(data, CV_WINDOW_NORMAL);
 
 	cv::Mat img; // Current frame
-	cv::Mat prevFrame; // Previous frame for matching
+	cv::Mat prevImg; // Previous frame for matching
+	cv::Mat matchedImage; // two images stacked horizontally
+
 	imageHandler image; // src/imageHandler.cpp class
+	featureMatcher matcher; // src/featureMatcher class
 
 	while(cap.isOpened()){	
-		cap >> img; // Converts VideoCapture to cv::Mat
+		cap >> img; // Video streaming
 		if(img.empty()) break;
-		Frame frame(img);
-		frame.prepare_frame();
-		frame.process_frame();
-		frame.draw(); 
+
+		Frame actFrame(img); // Actual frame of the video
+		actFrame.prepare_frame(); // Resize the frame and convert into grayscale
+		actFrame.process_frame(); // Extract Good Features and generate Descriptors
+
+		if(!prevImg.empty()){
+			// Doing the same process for the previous frame for matching descriptors
+			Frame prevFrame(prevImg);
+			prevFrame.prepare_frame();
+			prevFrame.process_frame();
+
+			matcher.match(actFrame.getDescriptors(), prevFrame.getDescriptors());	
+			matchedImage = matcher.draw(img, actFrame.getKeyPoints(), prevImg, prevFrame.getKeyPoints());
+		}
+
+		if(matchedImage.empty()) image.draw(img); 
+		else image.draw(matchedImage); 
+		prevImg = img;
 		if(cv::waitKey(30) >= 0) break;
 	}
 	return 0;

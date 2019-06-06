@@ -27,3 +27,11 @@ void Frame::draw(){
 	cv::resizeWindow("Video Feed", this->frame.size[1], this->frame.size[0]);
 	cv::imshow("Video Feed", this->frame);
 }
+
+std::vector<cv::KeyPoint> Frame::getKeyPoints(){
+	return this->keypoints;
+}
+
+cv::Mat Frame::getDescriptors(){
+	return this->descriptors;
+}

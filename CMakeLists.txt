@@ -26,12 +26,39 @@ add_library(frame
 	./headers/frame.hpp
 )
 
+add_library(featureMatcher
+	./src/featureMatcher.cpp
+	./headers/featureMatcher.hpp
+)
+
 add_executable(slam
 	./src/main.cpp
 )
 
-target_link_libraries(slam arguments)
+
+add_library(test
+	./src/featureMatcher.cpp
+	./headers/featureMatcher.hpp
+
+	./src/frame.cpp
+	./headers/frame.hpp
+
+	./src/frame.cpp
+	./headers/frame.hpp
+
+	./src/arguments.cpp
+	./headers/arguments.hpp
+
+	./src/featureExtractor.cpp
+	./headers/featureExtractor.hpp
+
+	./src/processing.cpp
+	./headers/processing.hpp
+)
+
+target_link_libraries(slam ${OpenCV_LIBS})
 target_link_libraries(slam processing)
+target_link_libraries(slam arguments)
 target_link_libraries(slam frame)
 target_link_libraries(slam featureExtractor)
-target_link_libraries(slam ${OpenCV_LIBS})
+target_link_libraries(slam featureMatcher)

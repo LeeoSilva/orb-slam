@@ -14,5 +14,7 @@ public:
 	void process_frame();
 	void prepare_frame();
 	void draw();
+	cv::Mat getDescriptors();
+	std::vector<cv::KeyPoint> getKeyPoints();
 };
 

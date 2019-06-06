@@ -32,7 +32,7 @@ std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_detectAndCom
 	return (descriptors, result);
 }
 
-std::vector<std::vector<cv::DMatch>> featureExtractor::ORB_match(const cv::Mat& descriptors1, const cv::Mat& descriptors2){
+std::vector<std::vector<cv::DMatch>> featureExtractor::matching(const cv::Mat& descriptors1, const cv::Mat& descriptors2){
 	cv::Ptr<cv::DescriptorMatcher> matcher = cv::DescriptorMatcher::create(cv::NORM_HAMMING);
     std::vector< std::vector<cv::DMatch> > knn_matches;
     matcher->knnMatch( descriptors1, descriptors2, knn_matches, 2 );
