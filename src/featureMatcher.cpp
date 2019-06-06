@@ -10,11 +10,11 @@ void featureMatcher::match(const cv::Mat& descriptors1, const cv::Mat& descripto
 }
 
 cv::Mat featureMatcher::paint(const cv::Mat& actFrame, 
-					const std::vector<cv::KeyPoint>& keypoints1, 
-					const cv::Mat& prevFrame,
-					const std::vector<cv::KeyPoint>& keypoints2){
-	cv::Mat imgMatches;
+				const std::vector<cv::KeyPoint>& keypoints1, 
+				const cv::Mat& prevFrame,
+				const std::vector<cv::KeyPoint>& keypoints2){
+	cv::Mat imgMatches; // output image
 	drawMatches(actFrame, keypoints1, prevFrame, keypoints2, this->matches, imgMatches);
-	return imgMatches;
+	keturn imgMatches;
 }
 
