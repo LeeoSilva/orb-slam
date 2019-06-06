@@ -55,6 +55,7 @@ int main(int argc, char** argv){
 
 			matcher.match(actFrame.getDescriptors(), prevFrame.getDescriptors());	
 			matchedImage = matcher.paint(img, actFrame.getKeyPoints(), prevImg, prevFrame.getKeyPoints());
+			matcher.sortByDistance();
 		}
 
 		if(matchedImage.empty()) image.draw(img); 

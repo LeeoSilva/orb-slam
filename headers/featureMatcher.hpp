@@ -12,5 +12,7 @@ public:
 			const std::vector<cv::KeyPoint>& keypoints1, 
 			const cv::Mat& prevFrame,
 			const std::vector<cv::KeyPoint>& keypoints2);
- 
+	void filter(const unsigned& maxDistance, const unsigned& minDistance);
+	void sortByDistance();
+	std::vector<cv::DMatch> getTopMatches(const unsigned& top);
 };
