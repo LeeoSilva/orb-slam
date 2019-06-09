@@ -20,7 +20,7 @@ cv::Mat featureMatcher::paint(const cv::Mat& actFrame,
 
 void featureMatcher::filter(const unsigned& maxDistance, const unsigned& minDistance){
 	std::vector<cv::DMatch> filteredMatches; 
-	for(std::size_t i = 0; i <= this->matches.size(); i++){
+	for(std::size_t i = 0; i <= this->matches.size(); ++i){
 		if(matches[i].distance > minDistance) filteredMatches.push_back(matches[i]);
 		else if(matches[i].distance < maxDistance) filteredMatches.push_back(matches[i]);
 	}
@@ -29,7 +29,7 @@ void featureMatcher::filter(const unsigned& maxDistance, const unsigned& minDist
 
 void featureMatcher::sortByDistance(){
 	std::vector<cv::DMatch> sortedMatches;
-	for(std::size_t i = 0; i <= this->matches.size(); i++){
+	for(std::size_t i = 0; i <= this->matches.size(); ++i){
 		std::cout << "Distance: " << this->matches[i].queryIdx<< std::endl;
 	}
 }

@@ -57,7 +57,7 @@ cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv
 	unsigned circleRadius = 1;
 	cv::Scalar circleColor(0, 255, 0);
 	unsigned circleTickness = 3;
-	for( std::size_t i = 0; i < keypoints.size(); i++ )
+	for( std::size_t i = 0; i < keypoints.size(); ++i )
         cv::circle(img, keypoints[i], circleRadius, circleColor, circleTickness); 
 	return img;
 }
@@ -66,7 +66,7 @@ cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv
 	unsigned circleRadius = 1;
 	cv::Scalar circleColor(0, 255, 0);
 	unsigned circleTickness = 1;
-	for( std::size_t i = 0; i < keypoints.size(); i++ )
+	for( std::size_t i = 0; i < keypoints.size(); ++i )
 		cv::circle(img, keypoints[i].pt, circleRadius, circleColor, circleTickness); 
 	return img;
 }
