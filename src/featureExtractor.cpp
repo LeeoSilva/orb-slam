@@ -7,7 +7,7 @@
 std::pair<cv::Mat, std::vector<cv::KeyPoint>> featureExtractor::ORB_detector(const cv::Mat& img){
 	// A modification of FAST algorithm
 	// Obs: Ironically it is faster then FAST '-'
-	unsigned maxFeatures = 3000;
+	const unsigned maxFeatures = 3000;
 	cv::Ptr<cv::FeatureDetector> detector = cv::ORB::create(maxFeatures); 
 	std::vector<cv::KeyPoint> keypoints;
 	cv::Mat descriptors;
@@ -53,7 +53,7 @@ std::vector<cv::KeyPoint> featureExtractor::GFTT_detect(const cv::Mat& img) {
 	return keypoints;
 }
 
-cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& keypoints){
+cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& keypoints) const {
 	unsigned circleRadius = 1;
 	cv::Scalar circleColor(0, 255, 0);
 	unsigned circleTickness = 3;
@@ -62,7 +62,7 @@ cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv
 	return img;
 }
 
-cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::KeyPoint>& keypoints){
+cv::Mat featureExtractor::drawKeyPoints(const cv::Mat& img, const std::vector<cv::KeyPoint>& keypoints) const {
 	unsigned circleRadius = 1;
 	cv::Scalar circleColor(0, 255, 0);
 	unsigned circleTickness = 1;

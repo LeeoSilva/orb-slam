@@ -1,13 +1,12 @@
 #include "../headers/featureMatcher.hpp"
 
-// For better explanation of how does Feature Matching works go to:
+// For explanation of how does Feature Matching works go to:
 // https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_feature2d/py_matcher/py_matcher.html
-
 
 void featureMatcher::match(const cv::Mat& descriptors1, const cv::Mat& descriptors2){
 	cv::BFMatcher matcher(cv::NORM_HAMMING, true); // Brute force matcher 
 	matcher.match(descriptors1, descriptors2, this->matches);
-	std::cout << "Got " << this->matches.size() << " matches" << std::endl;
+	std::cout << "\rGot " << this->matches.size() << " matches" << std::endl;
 }
 
 cv::Mat featureMatcher::paint(const cv::Mat& actFrame, 
@@ -29,12 +28,10 @@ void featureMatcher::filter(const unsigned& maxDistance, const unsigned& minDist
 }
 
 void featureMatcher::sortByDistance(){
-	std::cout << this->matches.size() << std::endl;
 	std::vector<cv::DMatch> sortedMatches;
 	for(std::size_t i = 0; i <= this->matches.size(); i++){
-		std::cout << "Distance: " << this->matches[i].distance << std::endl;
+		std::cout << "Distance: " << this->matches[i].queryIdx<< std::endl;
 	}
-
 }
 
 

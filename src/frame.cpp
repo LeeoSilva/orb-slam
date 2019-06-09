@@ -11,7 +11,7 @@ void Frame::prepare_frame(){
 	cv::cvtColor(this->frame, this->gray, CV_RGB2GRAY); 
 }
 
-void Frame::process_frame(){
+void Frame::process_frame(const unsigned& alg){
 	if(this->gray.channels() != 1){ // Checks if this->gray is grayscale
 		std::cerr << "Image should have only one channel" << std::endl;
 		return;
@@ -21,7 +21,7 @@ void Frame::process_frame(){
 	this->descriptors = extractor.ORB_compute(this->gray, this->keypoints); // Compute descriptors
 	this->frame = extractor.drawKeyPoints(this->frame, this->keypoints); // Draw keypoints in the original image
 }
- 
+
 void Frame::draw(){
  	cv::namedWindow("Video Feed", CV_WINDOW_AUTOSIZE);
 	cv::resizeWindow("Video Feed", this->frame.size[1], this->frame.size[0]);

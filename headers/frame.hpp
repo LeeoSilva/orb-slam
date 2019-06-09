@@ -11,7 +11,7 @@ private:
 	cv::Mat descriptors;
 public:	
 	Frame(const cv::Mat& img);
-	void process_frame();
+	void process_frame(const unsigned& alg);
 	void prepare_frame();
 	void draw();
 	cv::Mat getDescriptors();

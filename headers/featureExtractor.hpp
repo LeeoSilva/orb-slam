@@ -14,6 +14,6 @@ public:
 	//std::vector<cv::KeyPoint> mat2KeyPoints(const std::vector<cv::Point2f>& features);
 
 
-	cv::Mat drawKeyPoints(const cv::Mat& img, const std::vector<cv::KeyPoint>& keypoints); 
-	cv::Mat drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& keypoints);
+	cv::Mat drawKeyPoints(const cv::Mat& img, const std::vector<cv::KeyPoint>& keypoints) const;
+	cv::Mat drawKeyPoints(const cv::Mat& img, const std::vector<cv::Point2f>& keypoints) const;
 };
