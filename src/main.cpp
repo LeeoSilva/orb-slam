@@ -36,7 +36,7 @@ int main(int argc, char** argv){
 	featureMatcher matcher; // src/featureMatcher class
 
 	cv::Mat matchedImage; // two images stacked horizontally
-	for(cv::Mat img, prevImg; cap.isOpened() && cv::waitKey(30) < 0; image.draw(img)){	
+	for(cv::Mat img, prevImg; cap.isOpened() && cv::waitKey(30) < 0;){	
 		cap >> img; // Video streaming
 		if(img.empty()) break;
 
@@ -48,14 +48,15 @@ int main(int argc, char** argv){
 			// Doing the same process for the previous frame for matching descriptors
 			Frame prevFrame(prevImg);
 			prevFrame.prepare_frame();
-			prevFrame.process_frame(alg);
+			//prevFrame.process_frame(alg);
 
-			matcher.match(actFrame.getDescriptors(), prevFrame.getDescriptors());	
-			matchedImage = matcher.paint(img, actFrame.getKeyPoints(), prevImg, prevFrame.getKeyPoints());
-			matcher.sortByDistance();
+			//std::vector<cv::DMatch> matches = matcher.match(actFrame.getDescriptors(), prevFrame.getDescriptors());	
+			//matchedImage = matcher.paint(img, actFrame.getKeyPoints(), prevImg, prevFrame.getKeyPoints(), matches);
+			//matcher.sortByDistance(matches);
 		}
 
-		prevImg = img;
+		//prevImg = img;
+		image.draw(img);
 	}
 	return 0;
 }

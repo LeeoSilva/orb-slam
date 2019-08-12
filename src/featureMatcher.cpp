@@ -1,5 +1,5 @@
 #include "../headers/featureMatcher.hpp"
-// For explanation of how does Feature Matching works go to:
+// For explanation of how does Feature Matching works  go to:
 // https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_feature2d/py_matcher/py_matcher.html
 /*
 std::vector<std::vector<cv::DMatch>> featureMatcher::match(const cv::Mat& descriptors1, const cv::Mat& descriptors2){
@@ -36,6 +36,15 @@ cv::Mat featureMatcher::paint(const cv::Mat& actFrame,
 	drawMatches(actFrame, keypoints1, prevFrame, keypoints2, matches, imgMatches);
 	return imgMatches;
 }
+
+
+void featureMatcher::sortByDistance(const std::vector<cv::DMatch>& matches){
+	std::vector<cv::DMatch> sortedMatches;
+	for(std::size_t i = 0; i <= matches.size(); ++i)
+		std::cout << "Distance: " << matches[i].distance << std::endl;
+}
+
+
 /*
 std::vector<std::vector<cv::DMatch>> featureMatcher::filter(const unsigned& maxDistance, const unsigned& minDistance, const std::vector<std::vector<cv::DMatch>> matches){
 	std::vector<std::vector<cv::DMatch>> filteredMatches;
@@ -61,12 +70,6 @@ std::vector<cv::DMatch> featureMatcher::filter(const unsigned& maxDistance, cons
 }
 
 
-
-void featureMatcher::sortByDistance(const std::vector<cv::DMatch>& matches){
-	std::vector<cv::DMatch> sortedMatches;
-	for(std::size_t i = 0; i <= matches.size(); ++i)
-		std::cout << "Distance: " << matches[i].distance << std::endl;
-}
  
 std::vector<cv::DMatch> featureMatcher::getTopMatches(const unsigned& top){
 
